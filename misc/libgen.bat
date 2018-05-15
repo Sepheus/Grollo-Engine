@@ -1,0 +1,1 @@
+implib /s allegro_something.lib allegro_something.dll

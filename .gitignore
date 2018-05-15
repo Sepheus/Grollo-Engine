@@ -1,0 +1,15 @@
+.dub
+.vscode
+docs.json
+__dummy.html
+docs/
+gfighter.so
+gfighter.dylib
+gfighter.dll
+gfighter.a
+gfighter.lib
+gfighter-test-*
+*.exe
+*.o
+*.obj
+*.lst

@@ -1,0 +1,21 @@
+{
+	"name": "gfighter",
+	"configurations": [
+		{
+		"name": "application",
+		"targetType": "executable",
+		"targetPath": "bin/win32/",
+		"platforms" : ["windows"],
+		"libs" : ["lib/win32/allegro", "lib/win32/allegro_image", "lib/win32/allegro_font", "lib/win32/allegro_ttf"]		
+		}
+	],
+	"authors": [
+		"Sepheus"
+	],
+	"dependencies": {
+		"allegro": "~>4.0.1"
+	},
+	"description": "GFighter standalone!",
+	"copyright": "Copyright © 2018, Sepheus",
+	"license": "GPL-3.0"
+}
