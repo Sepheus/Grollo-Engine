@@ -54,25 +54,37 @@ class Window {
         this.connect(&(cast(GameScene)gameScene).watch);
     }
 
+    void removeScene(IGameScene gameScene) {
+        this.disconnect(&(cast(GameScene)gameScene).watch);
+        gameScene.destroy();
+        gameScenes.remove!(scene => scene == gameScene);
+        gameScenes.length--;
+    }
+
     bool cycle() {
         al_wait_for_event(event_queue, &ev);
         pollKeys();
-        if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-            emit("mouseDown", new Vector2(ev.mouse.x, ev.mouse.y));
+        bool cycled;
+        switch(ev.type) {
+            default:
+                break;
+            case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+                emit("mouseDown", new Vector2(ev.mouse.x, ev.mouse.y));
+                break;
+            case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+                emit("mouseUp", new Vector2(ev.mouse.x, ev.mouse.y));
+                break;
+            case ALLEGRO_EVENT_MOUSE_AXES:
+                emit("mouseMove", new Vector2(ev.mouse.x, ev.mouse.y));
+                break;
+            case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                this._closed = true;
+                break;
+            case ALLEGRO_EVENT_TIMER:
+                cycled = true;
+                break;
         }
-        if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
-            emit("mouseUp", new Vector2(ev.mouse.x, ev.mouse.y));
-        }
-        if(ev.type == ALLEGRO_EVENT_MOUSE_AXES) {
-            emit("mouseMove", new Vector2(ev.mouse.x, ev.mouse.y));
-        }
-        if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-            this._closed = true;
-        }
-        if(ev.type == ALLEGRO_EVENT_TIMER) {
-            return true;
-        }
-        return false;
+        return cycled;
     }
 
     ushort pollKeys() {
@@ -89,12 +101,7 @@ class Window {
             gameScene.update();
             if(gameScene.finished) { finishedScenes ~= gameScene; }
         }
-        finishedScenes.each!((gameScene) {
-                gameScene.destroy();
-                gameScenes.remove!(scene => scene == gameScene);
-                gameScenes.length--;
-            }
-        );
+        finishedScenes.each!(scene => this.removeScene(scene));
     }
 
     void render() {

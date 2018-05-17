@@ -42,7 +42,7 @@ class Vector2 {
     /// In-place normalize the Vector2.
     void normalize() {
         immutable double length = sqrt(this.x^^2 + this.y^^2);
-        if(length != 0.0) {
+        if(length > 0.00001f) {
             this /= length;
         }
         else { this.x = this.y = 0.0f; }

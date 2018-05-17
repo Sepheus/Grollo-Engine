@@ -30,8 +30,11 @@ class Player : TexturedSprite, IClickable {
     }
 
     void onClick(string msg, Vector2 pos) {
-        _target = pos;
-        _heading = _target - (this.position + _centre);
-        _direction = Vector2.normalize(_heading);
+        if(msg == "mouseUp") {
+            "Fired".writeln;
+            _target = pos;
+            _heading = _target - (this.position + _centre);
+            _direction = Vector2.normalize(_heading);
+        }
     }
 }
