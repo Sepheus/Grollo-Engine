@@ -3,10 +3,12 @@ import engine.engine : TexturedSprite, Vector2;
 import engine.events;
 
 class Player : TexturedSprite, IClickable {
-
+    import std.stdio : writeln;
     private {
         Vector2 _target;
-        enum speed = 2.0f;
+        Vector2 _direction = Vector2.zero;
+        Vector2 _heading = Vector2.one;
+        enum _speed = 2.0f;
         enum _scale = 0.5f;
     }
 
@@ -17,13 +19,17 @@ class Player : TexturedSprite, IClickable {
     }
 
     override void update() {
-        if((this.position.x + this.width * 0.5) < _target.x) { this.move(new Vector2(speed, 0.0f)); }
-        if((this.position.x + this.width * 0.5) > _target.x) { this.move(new Vector2(-speed, 0.0f)); }
-        if((this.position.y + this.height * 0.5) < _target.y) { this.move(new Vector2(0.0f, speed)); }
-        if((this.position.y + this.height * 0.5) > _target.y) { this.move(new Vector2(0.0f, -speed)); }
+        if(_heading.sqrMagnitude < 1.0f) {
+        }
+        else { 
+            this.move(_direction * _speed);
+            _heading = _target - this.position;
+        }
     }
 
     void onClick(string msg, Vector2 pos) {
         _target = pos;
+        _heading = _target - this.position;
+        _direction = Vector2.normalize(_heading);
     }
 }

@@ -21,6 +21,16 @@ class Vector2 {
         return sqrt(this.x^^2 + this.y^^2);
     }
 
+    /// Return the magnitude of the Vector2.
+    @property float magnitude() const {
+        return this.length();
+    }
+
+    /// Return the squared magnitude of the Vector2.
+    @property float sqrMagnitude() const {
+        return (this.x^^2 + this.y^^2);
+    }
+
 
     /// Compute the distance between two Vector2 instances.
     static double distance(in Vector2 lhs, in Vector2 rhs) {
@@ -33,10 +43,16 @@ class Vector2 {
     void normalize() {
         immutable double length = sqrt(this.x^^2 + this.y^^2);
         if(length != 0.0) {
-            immutable float scalar = 1.0f / length;
-            this.x *= scalar;
-            this.y *= scalar;
+            this /= length;
         }
+        else { this.x = this.y = 0.0f; }
+    }
+
+    /// Create a unit vector from the input vector.
+    static Vector2 normalize(in Vector2 vec) {
+        auto normalized = new Vector2(vec);
+        normalized.normalize;
+        return normalized;
     }
 
     /// Return a new Vector2 with the minimum values from both Vector2 instances.
@@ -47,6 +63,16 @@ class Vector2 {
     /// Return a new Vector2 with the maximum values from both Vector2 instances.
     static Vector2 max(in Vector2 lhs, in Vector2 rhs) {
         return new Vector2(lhs.x > rhs.x ? lhs.x : rhs.x, lhs.y > rhs.y ? lhs.y : rhs.y);
+    }
+
+    /// Return a new Vector2 with all values initialised to 0.0f
+    static Vector2 zero() {
+        return new Vector2(0.0f, 0.0f);
+    }
+
+    /// Return a new Vector2 with all values initialised to 1.0f
+    static Vector2 one() {
+        return new Vector2(1.0f, 1.0f);
     }
 
     /// Unary operations on Vector2 such as -- and ++, ~ and * are not supported.
