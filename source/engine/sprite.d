@@ -1,7 +1,7 @@
-module grollo.sprite;
-import grollo.gameobject : IGameObject; 
+module engine.sprite;
+import engine.gameobject : IGameObject; 
 abstract class Sprite : IGameObject {
-    import grollo.vector2 : Vector2;
+    import engine.vector2 : Vector2;
 
     union {
         private Vector2 _position;

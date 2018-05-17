@@ -1,4 +1,4 @@
-module grollo.window;
+module engine.window;
 
 class Window {
     import allegro5.allegro;
@@ -6,7 +6,7 @@ class Window {
     import allegro5.allegro_font;
     import allegro5.allegro_ttf;
     import allegro5.allegro_primitives;
-    import grollo.engine : IGameObject, GameScene, IGameScene, Vector2;
+    import engine.engine : IGameObject, GameScene, IGameScene, Vector2;
     import std.algorithm: sort, each, remove;
     import std.signals;
 
@@ -21,7 +21,7 @@ class Window {
         static uint _instanceCount = 0;
     }
 
-    this(int width=640, int height=200) {
+    this(int width=640, int height=480) {
         al_init();
         al_install_keyboard();
         al_init_image_addon();

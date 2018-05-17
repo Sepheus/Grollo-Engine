@@ -1,5 +1,5 @@
-module grollo.utility;
-import grollo.engine : IGameObject;
+module game.utility;
+import engine.engine : IGameObject;
 
 class Framerate : IGameObject {
 

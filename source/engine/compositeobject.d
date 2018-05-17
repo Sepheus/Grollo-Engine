@@ -1,6 +1,6 @@
-module grollo.compositeobject;
-import grollo.gameobject : IGameObject;
-import grollo.vector2 : Vector2;
+module engine.compositeobject;
+import engine.gameobject : IGameObject;
+import engine.vector2 : Vector2;
 
 abstract class CompositeGameObject : IGameObject {
 

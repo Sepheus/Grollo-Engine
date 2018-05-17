@@ -1,6 +1,6 @@
-module grollo.gamescene;
-import grollo.gameobject;
-import grollo.events;
+module engine.gamescene;
+import engine.gameobject;
+import engine.events;
 
 interface IGameScene {
     
@@ -18,10 +18,9 @@ interface IGameScene {
 }
 
 abstract class GameScene : IGameScene {
-    import grollo.gameobject: IGameObject;
-    import grollo.utility;
+    import engine.gameobject: IGameObject;
     import std.algorithm: sort;
-    import grollo.vector2 : Vector2;
+    import engine.vector2 : Vector2;
     import std.signals;
 
     private {

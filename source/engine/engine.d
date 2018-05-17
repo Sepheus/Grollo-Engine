@@ -1,12 +1,12 @@
-module grollo.engine;
+module engine.engine;
 
 public {
-    import grollo.window;
-    import grollo.vector2;
-    import grollo.gamescene;
-    import grollo.gameobject;
-    import grollo.compositeobject;
-    import grollo.sprite;
-    import grollo.texturedsprite;
-    import grollo.events;
+    import engine.window;
+    import engine.vector2;
+    import engine.gamescene;
+    import engine.gameobject;
+    import engine.compositeobject;
+    import engine.sprite;
+    import engine.texturedsprite;
+    import engine.events;
 }

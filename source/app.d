@@ -1,6 +1,6 @@
-import grollo.engine;
-import grollo.mainmenu;
-import grollo.arena;
+import engine.engine;
+import game.mainmenu;
+import game.arena;
 
 void main() {
     Window gameWindow = new Window();

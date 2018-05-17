@@ -1,4 +1,4 @@
-module grollo.gameobject;
+module engine.gameobject;
 
 interface IGameObject {
     void update();

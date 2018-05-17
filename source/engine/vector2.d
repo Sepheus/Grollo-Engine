@@ -1,4 +1,4 @@
-module grollo.vector2;
+module engine.vector2;
 
 /// Vector2 class
 class Vector2 {

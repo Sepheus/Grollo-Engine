@@ -1,11 +1,10 @@
-module grollo.mainmenu;
-import grollo.engine : GameScene;
+module game.mainmenu;
+import engine.engine : GameScene;
 
 class MainMenu : GameScene {
     import allegro5.allegro;
-    import grollo.gameobject;
-    import grollo.utility;
-    import grollo.loginbox;
+    import engine.gameobject;
+    import game.loginbox;
     private {
         ALLEGRO_BITMAP *background = null;
         ALLEGRO_BITMAP *sceneDisplay = null;

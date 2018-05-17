@@ -1,5 +1,5 @@
-module grollo.texturedsprite;
-import grollo.sprite;
+module engine.texturedsprite;
+import engine.sprite;
 
 abstract class TexturedSprite : Sprite {
 
@@ -11,7 +11,7 @@ abstract class TexturedSprite : Sprite {
 
     this(float x, float y, float width, float height, string assetName) {
         super(x, y, width, height);
-        _texture = al_load_bitmap(cast(char*)("assets/" ~ assetName));
+        _texture = al_load_bitmap(cast(char*)("assets/images/" ~ assetName));
         assert(_texture, "Failed to load texture.");
     }
 

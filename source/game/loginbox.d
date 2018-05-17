@@ -1,6 +1,6 @@
-module grollo.loginbox;
-import grollo.engine : IGameObject, Vector2;
-import grollo.events;
+module game.loginbox;
+import engine.engine : IGameObject, Vector2;
+import engine.events;
 
 class LoginBox : IGameObject, IClickable {
     import allegro5.allegro;
