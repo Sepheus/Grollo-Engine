@@ -21,7 +21,7 @@ abstract class Sprite : IGameObject {
 
     this(float x, float y, float width, float height) {
         _position = new Vector2(x, y);
-        _velocity = new Vector2(0.5f, 0.0f);
+        _velocity = Vector2.zero;
         _width = width;
         _height = height;
         _zOrder = 0;
