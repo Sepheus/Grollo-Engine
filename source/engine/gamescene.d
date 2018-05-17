@@ -9,6 +9,12 @@ interface IGameScene {
     void destroy();
 
     void addObject(IGameObject gameObject);
+
+    bool visible();
+    void visible(bool visible);
+
+    bool finished();
+    void finished(bool finished);
 }
 
 abstract class GameScene : IGameScene {
@@ -20,6 +26,8 @@ abstract class GameScene : IGameScene {
 
     private {
         IGameObject[] gameObjects;
+        bool _visible = true;
+        bool _finished = false;
     }
 
     void addObject(IGameObject gameObject) {
@@ -32,6 +40,21 @@ abstract class GameScene : IGameScene {
 
     @property int objectCount() const {
         return gameObjects.length;
+    }
+
+    @property bool visible() const { 
+        return _visible;
+    }
+
+    @property void visible(bool visible) { 
+        _visible = visible;
+    }
+
+    bool finished() {
+        return _finished;
+    }
+    void finished(bool finished) {
+        _finished = finished;
     }
 
     void watch(string msg, Vector2 pos) { 

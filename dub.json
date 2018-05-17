@@ -6,7 +6,10 @@
 		"targetType": "executable",
 		"targetPath": "bin/win32/",
 		"platforms" : ["windows"],
-		"libs" : ["lib/win32/allegro", "lib/win32/allegro_image", "lib/win32/allegro_font", "lib/win32/allegro_ttf"]		
+		"lflags": [
+			"/SUBSYSTEM:CONSOLE"
+		],
+		"libs" : ["lib/win32/allegro", "lib/win32/allegro_image", "lib/win32/allegro_font", "lib/win32/allegro_ttf", "lib/win32/allegro_primitives"]		
 		}
 	],
 	"authors": [

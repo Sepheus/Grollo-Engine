@@ -5,8 +5,9 @@ class Window {
     import allegro5.allegro_image;
     import allegro5.allegro_font;
     import allegro5.allegro_ttf;
+    import allegro5.allegro_primitives;
     import grollo.engine : IGameObject, GameScene, IGameScene, Vector2;
-    import std.algorithm: sort;
+    import std.algorithm: sort, each, remove;
     import std.signals;
 
     private {
@@ -20,10 +21,11 @@ class Window {
         static uint _instanceCount = 0;
     }
 
-    this(int width=640, int height=480) {
+    this(int width=640, int height=200) {
         al_init();
         al_install_keyboard();
         al_init_image_addon();
+        al_init_primitives_addon();
         al_init_font_addon();
         al_init_ttf_addon();
         al_install_mouse();
@@ -82,15 +84,23 @@ class Window {
     }
 
     void update() {
+        IGameScene[] finishedScenes;
         foreach(ref gameScene; gameScenes) {
             gameScene.update();
+            if(gameScene.finished) { finishedScenes ~= gameScene; }
         }
+        finishedScenes.each!((gameScene) {
+                gameScene.destroy();
+                gameScenes.remove!(scene => scene == gameScene);
+                gameScenes.length--;
+            }
+        );
     }
 
     void render() {
         al_clear_to_color(al_map_rgb(0,0,0));
         foreach(ref gameScene; gameScenes) {
-            gameScene.render();
+            if(gameScene.visible) { gameScene.render(); }
         }
         al_flip_display();
     }

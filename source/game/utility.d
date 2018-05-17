@@ -5,7 +5,6 @@ class Framerate : IGameObject {
 
     import allegro5.allegro;
     import allegro5.allegro_font;
-    import allegro5.allegro_ttf;
 
     private {
         int x = 0;
@@ -22,7 +21,7 @@ class Framerate : IGameObject {
         this.x = x;
         this.y = y;
         this.old_time = al_get_time();
-        this.font = al_load_ttf_font("assets/fonts/AtariClassic-Regular.ttf", 20, ALLEGRO_TTF_MONOCHROME);
+        this.font = al_create_builtin_font();
     }
 
 
