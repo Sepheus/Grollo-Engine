@@ -1,20 +1,19 @@
 module game.loginbox;
-import engine.engine : IGameObject, Vector2;
-import engine.events;
+import engine.engine : IGameObject, Vector2, IClickable;
 
 class LoginBox : IGameObject, IClickable {
-    import allegro5.allegro;
-    import allegro5.allegro_font;
-    import allegro5.allegro_ttf;
-    import allegro5.allegro_primitives;
+    import allegro5.allegro : al_map_rgb;
+    import allegro5.allegro_font : ALLEGRO_ALIGN_CENTER, ALLEGRO_FONT, al_load_font, al_draw_text, al_destroy_font;
+    import allegro5.allegro_ttf : ALLEGRO_TTF_MONOCHROME;
+    import allegro5.allegro_primitives : al_draw_filled_rectangle;
     private {
         ALLEGRO_FONT *font;
-        bool _loggedIn = false;
-        uint z = 0;
+        bool _loggedIn;
+        uint z;
     }
 
     this() {
-        this.font = al_load_ttf_font("assets/fonts/AtariClassic-Regular.ttf", 20, ALLEGRO_TTF_MONOCHROME);
+        this.font = al_load_font("assets/fonts/AtariClassic-Regular.ttf", 20, ALLEGRO_TTF_MONOCHROME);
     }
 
     void onClick(string msg, Vector2 pos) {

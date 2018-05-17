@@ -26,7 +26,7 @@ abstract class GameScene : IGameScene {
     private {
         IGameObject[] gameObjects;
         bool _visible = true;
-        bool _finished = false;
+        bool _finished;
     }
 
     void addObject(IGameObject gameObject) {

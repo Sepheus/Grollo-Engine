@@ -11,14 +11,14 @@ class Window {
     import std.signals;
 
     private {
-        ALLEGRO_DISPLAY *display = null;
-        ALLEGRO_EVENT_QUEUE *event_queue = null;
-        ALLEGRO_TIMER *timer = null;
+        ALLEGRO_DISPLAY *display;
+        ALLEGRO_EVENT_QUEUE *event_queue;
+        ALLEGRO_TIMER *timer;
         ALLEGRO_EVENT ev;
-        bool _closed = false;
+        bool _closed;
         IGameScene[] gameScenes;
         immutable double FPS = 60.0;
-        static uint _instanceCount = 0;
+        static uint _instanceCount;
     }
 
     this(int width=640, int height=480) {

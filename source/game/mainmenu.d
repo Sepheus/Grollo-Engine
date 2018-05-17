@@ -2,35 +2,25 @@ module game.mainmenu;
 import engine.engine : GameScene;
 
 class MainMenu : GameScene {
-    import allegro5.allegro;
-    import engine.gameobject;
     import game.loginbox;
     private {
-        ALLEGRO_BITMAP *background = null;
-        ALLEGRO_BITMAP *sceneDisplay = null;
-        ALLEGRO_DISPLAY *display = null;
-        LoginBox loginBox;
+        LoginBox _loginBox;
     }
 
     this(int width=640, int height=480) {
-        sceneDisplay = al_create_bitmap(320,240);
-        loginBox = new LoginBox();
-        this.addObject(loginBox);
+        _loginBox = new LoginBox();
+        this.addObject(_loginBox);
         
     }
 
     override void update() {
-        if(loginBox.loggedIn) { this.finished = true; }
+        if(_loginBox.loggedIn) { this.finished = true; }
         GameScene.update();
     }
 
     override void render() {
-        //al_draw_bitmap(background, 0, 0, 0);
+        import allegro5.allegro : al_clear_to_color, al_map_rgb;
         al_clear_to_color(al_map_rgb(51, 51, 51));
         GameScene.render();
-    }
-
-    ~this() {
-        al_destroy_bitmap(sceneDisplay);
     }
 }

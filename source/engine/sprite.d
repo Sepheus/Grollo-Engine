@@ -16,6 +16,7 @@ abstract class Sprite : IGameObject {
     private {
         float _width, _height;
         uint _zOrder;
+        float _scale = 1.0f;
     }
 
     this(float x, float y, float width, float height) {
@@ -26,8 +27,9 @@ abstract class Sprite : IGameObject {
         _zOrder = 0;
     }
 
-    @property float width() const { return _width; }
-    @property float height() const { return _height; }
+    @property float width() const { return _width * _scale; }
+    @property float height() const { return _height * _scale; }
+    @property void setScale(const float scale) { this._scale = scale; }
 
 
     void move(float x, float y) {

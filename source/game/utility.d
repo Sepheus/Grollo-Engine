@@ -7,14 +7,14 @@ class Framerate : IGameObject {
     import allegro5.allegro_font;
 
     private {
-        int x = 0;
-        int y = 0;
+        int x;
+        int y;
         int z = 100;
-        int frames_done = 0;
+        int frames_done;
         double fps = 0.0;
         double game_time = 0.0;
         double old_time = 0.0;
-        ALLEGRO_FONT *font = null;
+        ALLEGRO_FONT *font;
     }
 
     this(int x, int y) {
