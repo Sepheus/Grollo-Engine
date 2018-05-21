@@ -59,6 +59,31 @@ class Vector3 {
         return new Vector3(1.0f, 0.0f, 0.0f);
     }
 
+    /// Compute the distance between two Vector3 instances.
+    static float distance(in Vector3 lhs, in Vector3 rhs) {
+        return (lhs - rhs).magnitude();
+    }
+
+    /// Create a unit vector from the input vector.
+    static Vector3 normalize(in Vector3 vec) {
+        auto normalized = new Vector3(vec);
+        return normalized.normalize;
+    }
+
+
+
+    /// In-place normalize the Vector3, returns the normalized Vector3.
+    Vector3 normalize() {
+        immutable double length = this.length();
+        if(length > 0.00001f) {
+            this /= length;
+        }
+        else { this = 0.0f; }
+        return this;
+    }
+
+
+
     /// Return the length of the Vector3.
     @property float length() const {
         return sqrt(this.x^^2 + this.y^^2 + this.z^^2);
@@ -73,6 +98,8 @@ class Vector3 {
     @property float sqrMagnitude() const {
         return (this.x^^2 + this.y^^2 + this.z^^2);
     }
+
+
 
     /// Unary operations on Vector3 such as -- and ++, ~ and * are not supported.
     Vector3 opUnary(string op)() {
@@ -134,13 +161,10 @@ class Vector3 {
         final switch(index) {
             case 0:
                 return x;
-                break;
             case 1:
                 return y;
-                break;
             case 2:
                 return z;
-                break;
         }
     }
 
@@ -173,4 +197,7 @@ unittest {
     assert(testVector[1] == 2.0f);
     assert(testVector[2] == 3.0f);
     assert((testVector[0] = 4.0f) == new Vector3(4.0f, 2.0f, 3.0f));
+    assert(Vector3.distance(Vector3.right, Vector3.zero) == 1.0f);
+    assert(Vector3.zero == 0.0f);
+    assert(Vector3.zero.normalize == 0.0f);
 }
