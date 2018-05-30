@@ -29,9 +29,14 @@ if(size >= 2 && size <= 4)
         mixin("@property ref " ~ c ~ "() { return _components[" ~ i.stringof ~ "]; }");
     }
 
-    @property length() const {
+    
+    /// Magnitude of the Vector
+    @property magnitude() const {
         return this.sqrMagnitude.sqrt;
     }
+
+    /// Magnitude of the Vector
+    alias length = magnitude;
 
     @property sqrMagnitude() const {
         return _components.fold!((a, b) => a + b^^2)(0.0f);
@@ -62,7 +67,7 @@ if(size >= 2 && size <= 4)
     }
 
     /// Vector on Vector operations such as addition and subtraction, yields a new Vector instance.
-    Vector opBinary(string op)(in Vector rhs) {
+    Vector opBinary(string op)(in Vector rhs) const {
         Vector v = Vector.zero;
         static foreach(i; 0 .. size) {{
             enum left = "v[" ~ i.stringof ~ "] ";
@@ -72,13 +77,40 @@ if(size >= 2 && size <= 4)
         return v;
     }
 
+    /// In-place Scalar on Vector operations such as addition and subtraction.
+    Vector3 opOpAssign(string op)(in float scalar) {
+        static foreach(i, c; _props[0..size]) {
+            mixin("this." ~ c ~ " " ~ op ~ "= scalar;");
+        }
+        return this;
+    }
+
+    /// Compute the distance between two Vector instances
+    static float distance(in Vector lhs, in Vector rhs) {
+        return (lhs - rhs).magnitude;
+    }
+
+    /// Return a new zero Vector (all components initialised to 0.0f)
     static Vector zero() {
         return new Vector();
     }
+
+    /// Return a new unit Vector (all components initialised to 1.0f)
+    static Vector one() {
+        return new Vector();
+    }
+
+    override string toString() {
+        import std.format : format;
+        return _components.format!("(%(%s, %))");
+    }
 }
 
+/// 2D Vector with components x and y.
 alias Vector2 = Vector!2;
+/// 3D Vector with components x, y and z.
 alias Vector3 = Vector!3;
+/// 4D Vector with components x, y, z and w.
 alias Vector4 = Vector!4;
 
 unittest {
@@ -96,4 +128,10 @@ unittest {
     assert(t.x == 2.0f);
     auto z = t + new Vector3(0.0f, 2.0f, 4.0f);
     assert(z.y == 2.0f);
+    auto vecA = new Vector3(7.0f, 4.0f, 3.0f);
+    auto vecB = new Vector3(17.0f, 6.0f, 2.0f);
+    assert(Vector3.distance(vecA, vecB).feqrel(10.2469));
+    assert(Vector3.distance(vecB, vecA).feqrel(10.2469));
+    vecA *= 2.0f;
+    vecA.writeln;
 }
