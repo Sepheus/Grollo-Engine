@@ -63,8 +63,10 @@ if(size >= 2 && size <= 4)
 
     /// Vector on Vector operations such as addition and subtraction, yields a new Vector instance.
     Vector opBinary(string op)(in Vector rhs) const {
-        static immutable args = ["this[0] " ~ op ~ " rhs[0]", "this[1] " ~ op ~ " rhs[1]", 
-                                 "this[2] " ~ op ~ " rhs[2]", "this[3] " ~ op ~ " rhs[3]"][0..size];
+        import std.range : iota;
+        import std.algorithm : map;
+        import std.array : array;
+        static immutable args = size.iota.map!(i => "this[" ~ i.to!string ~ "] " ~ op ~ " rhs[" ~ i.to!string ~ "]").array;
         mixin("return new Vector" ~ args.format!("(%-(%s%|, %));"));
     }
 
