@@ -7,6 +7,7 @@ if(size >= 2 && size <= 4)
     import std.math : sqrt;
     import std.algorithm : fold;
     import std.conv : to;
+    import std.format : format;
 
     private {
         static immutable _typeName = "Vector" ~ size.to!string;
@@ -17,12 +18,6 @@ if(size >= 2 && size <= 4)
     /// Construct a new vector with the given components
     this(T...)(T components) if (components.length == size && allSatisfy!(isFloatingPoint, T)) {
         _components = [components];
-    }
-
-    private this() {
-        static foreach(i; 0 .. size) {
-            this[i] = 0.0f;
-        }
     }
 
     static foreach(i, c; _props[0..size]) {
@@ -68,19 +63,23 @@ if(size >= 2 && size <= 4)
 
     /// Vector on Vector operations such as addition and subtraction, yields a new Vector instance.
     Vector opBinary(string op)(in Vector rhs) const {
-        Vector v = Vector.zero;
-        static foreach(i; 0 .. size) {{
-            enum left = "v[" ~ i.stringof ~ "] ";
-            enum right = " rhs[" ~ i.stringof ~ "];";
-            mixin(left ~ "= " ~ left ~ op ~ right);
-        }}
-        return v;
+        static immutable args = ["this[0] " ~ op ~ " rhs[0]", "this[1] " ~ op ~ " rhs[1]", 
+                                 "this[2] " ~ op ~ " rhs[2]", "this[3] " ~ op ~ " rhs[3]"][0..size];
+        mixin("return new Vector" ~ args.format!("(%-(%s%|, %));"));
     }
 
     /// In-place Scalar on Vector operations such as addition and subtraction.
-    Vector3 opOpAssign(string op)(in float scalar) {
+    Vector opOpAssign(string op)(in float scalar) {
         static foreach(i, c; _props[0..size]) {
             mixin("this." ~ c ~ " " ~ op ~ "= scalar;");
+        }
+        return this;
+    }
+
+    /// Sets Vector components to scalar value.
+    Vector opAssign(in float scalar) {
+        static foreach(i, c; _props[0..size]) {
+            mixin("this." ~ c ~ " = scalar;");
         }
         return this;
     }
@@ -92,16 +91,17 @@ if(size >= 2 && size <= 4)
 
     /// Return a new zero Vector (all components initialised to 0.0f)
     static Vector zero() {
-        return new Vector();
+        static immutable args = [0,0,0,0][0..size];
+        mixin("return new Vector" ~ args.format!("(%(%s.0f%|, %))") ~ ";");
     }
 
     /// Return a new unit Vector (all components initialised to 1.0f)
     static Vector one() {
-        return new Vector();
+        static immutable args = [1,1,1,1][0..size];
+        mixin("return new Vector" ~ args.format!("(%(%s.0f%|, %))") ~ ";");
     }
 
     override string toString() {
-        import std.format : format;
         return _components.format!("(%(%s, %))");
     }
 }
@@ -134,4 +134,5 @@ unittest {
     assert(Vector3.distance(vecB, vecA).feqrel(10.2469));
     vecA *= 2.0f;
     vecA.writeln;
+    Vector2.one.writeln;
 }
