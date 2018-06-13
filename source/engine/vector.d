@@ -8,6 +8,10 @@ if(size >= 2 && size <= 4)
     import std.algorithm : fold;
     import std.conv : to;
     import std.format : format;
+    import std.range : iota;
+    import std.algorithm : map;
+    import std.array : array;
+    import std.math : feqrel;
 
     private {
         static immutable _typeName = "Vector" ~ size.to!string;
@@ -63,12 +67,16 @@ if(size >= 2 && size <= 4)
 
     /// Vector on Vector operations such as addition and subtraction, yields a new Vector instance.
     Vector opBinary(string op)(in Vector rhs) const {
-        import std.range : iota;
-        import std.algorithm : map;
-        import std.array : array;
         static immutable args = size.iota.map!(i => "this[" ~ i.to!string ~ "] " ~ op ~ " rhs[" ~ i.to!string ~ "]").array;
         mixin("return new Vector" ~ args.format!("(%-(%s%|, %));"));
     }
+
+    /// Scalar on Vector operations such as addition and subtraction, yields a new Vector instance.
+    Vector opBinary(string op)(in float scalar) const {
+        static immutable args = size.iota.map!(i => "this[" ~ i.to!string ~ "] " ~ op ~ " scalar").array;
+        mixin("return new Vector" ~ args.format!("(%-(%s%|, %));"));
+    }
+
 
     /// In-place Scalar on Vector operations such as addition and subtraction.
     Vector opOpAssign(string op)(in float scalar) {
@@ -76,6 +84,13 @@ if(size >= 2 && size <= 4)
             mixin("this." ~ c ~ " " ~ op ~ "= scalar;");
         }
         return this;
+    }
+
+    /// Test equality between two Vector instances.
+    override bool opEquals(in Object o) const {
+        static immutable args = size.iota.map!(i => "this[" ~ i.to!string ~ "] == rhs[" ~ i.to!string ~ "]").array;
+        auto rhs = cast(immutable Vector)o;
+        mixin(args.format!("return (%-(%s%| && %));"));
     }
 
     /// Sets Vector components to scalar value.
@@ -137,4 +152,6 @@ unittest {
     vecA *= 2.0f;
     vecA.writeln;
     Vector2.one.writeln;
+    (Vector2.one - 1.0f).writeln;
+    assert(Vector2.one == Vector3.one);
 }
