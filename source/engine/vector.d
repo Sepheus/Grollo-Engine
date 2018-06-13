@@ -88,9 +88,8 @@ if(size >= 2 && size <= 4)
 
     /// Test equality between two Vector instances.
     override bool opEquals(in Object o) const {
-        static immutable args = size.iota.map!(i => "this[" ~ i.to!string ~ "] == rhs[" ~ i.to!string ~ "]").array;
         auto rhs = cast(immutable Vector)o;
-        mixin(args.format!("return (%-(%s%| && %));"));
+        return (this - rhs).sqrMagnitude < float.epsilon;
     }
 
     /// Sets Vector components to scalar value.
@@ -153,5 +152,5 @@ unittest {
     vecA.writeln;
     Vector2.one.writeln;
     (Vector2.one - 1.0f).writeln;
-    assert(Vector2.one == Vector3.one);
+    assert(new Vector2(0.04, 0.931234) == new Vector2(0.04, 0.93125));
 }
