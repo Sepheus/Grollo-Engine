@@ -86,7 +86,7 @@ if(size >= 2 && size <= 4)
         return this;
     }
 
-    /// Test equality between two Vector instances.
+    /// Test approximate equality between two Vector instances.
     override bool opEquals(in Object o) const {
         auto rhs = cast(immutable Vector)o;
         return (this - rhs).sqrMagnitude < float.epsilon;
