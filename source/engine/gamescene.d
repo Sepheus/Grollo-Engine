@@ -37,7 +37,7 @@ abstract class GameScene : IGameScene {
         gameObjects.sort!((ref x, ref y) => x.zOrder() < y.zOrder());
     }
 
-    @property int objectCount() const {
+    @property size_t objectCount() const {
         return gameObjects.length;
     }
 
