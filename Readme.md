@@ -5,7 +5,7 @@ A simple 2D toy engine written in [D](https://dlang.org/) powered by [Allegro](h
 Build Instructions
 ------
 
-	Download the [D installer](https://dlang.org/).
-	Clone the repository.
-	Navigate into the main folder and type 'dub run'.
-	Libraries provided for Windows only.
+* Download the [D installer](https://dlang.org/).
+* Clone the repository.
+* Navigate into the main folder and type 'dub run'.
+* Libraries provided for Windows only.
